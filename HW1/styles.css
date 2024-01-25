@@ -1,0 +1,63 @@
+body {
+  background-color: powderblue;
+  width: 100%;
+  /* 900px width */
+  max-width: 900px;
+  /* center align */
+  margin: auto;
+  /* bottom margin */
+  margin-bottom: 100px;
+}
+
+.highlight {
+  color: crimson;
+}
+
+p {
+  /* Red line */
+  text-indent: 40px;
+}
+
+q {
+  /* Quotes as double brackets  */
+  quotes: "\00ab" "\00bb";
+  font-style: italic;
+  color: navy;
+}
+
+table,
+th,
+td {
+  border: 1px solid black;
+  font-size: large;
+  text-align: center;
+}
+
+.bordered {
+  border: 10px solid red;
+}
+
+/* Red dots for marked list */
+/* Delete default dots */
+.red-dots {
+  list-style-type: none;
+  padding: 0;
+}
+
+/* Position of dots */
+.red-dots li {
+  position: relative;
+  padding-left: 20px;
+  margin-bottom: 8px;
+}
+
+.red-dots li::before {
+  /* Dot symbol */
+  content: '\2022';
+  color: red;
+  font-size: 20px;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}

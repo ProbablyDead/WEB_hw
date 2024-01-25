@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="styles.css">
+  <title>Volodin HW1</title>
+</head>
+
+<body>
+  <main>
+    <header>
+      <h1>Volodin Ilya 21PI1 HW1</h1>
+    </header>
+    <section title="Heareders">
+      <h2 class="highlight">Several headers</h2>
+      <article>
+        <h3>Third heared</h3>
+        <h4>Forth header</h4>
+      </article>
+    </section>
+
+    <section title="Selections">
+      <h2 class="highlight">Bold, Italic, Underline</h2>
+      <article>
+        <h3>Bold paragraph</h3>
+        <p>Lorem ipsum dolor sit amet, <b>consectetur adipiscing elit</b>, sed do eiusmod tempor incididunt ut labore et
+          dolore magna aliqua.
+          Ut enim ad minim veniam, <b>quis nostrud exercitation ullamco</b> laboris nisi ut aliquip ex ea
+          commodo consequat.
+          Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+          pariatur. Excepteur <b>sint occaecat cupidatat</b> non proident, sunt in culpa qui officia deserunt mollit
+          anim
+          id est
+          laborum.</p>
+        <h3>Italic paragraph</h3>
+        <p>Lorem <i>ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</i> incididunt ut labore et
+          dolore
+          magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi <i>ut aliquip ex ea
+            commodo
+            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat</i> nulla
+          pariatur. Excepteur sint occaecat cupidatat non proident, <i>sunt in culpa qui officia</i> deserunt mollit
+          anim
+          id est
+          laborum.</p>
+        <h3>Underline paragraph</h3>
+        <p>Lorem <u>ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</u> incididunt ut labore et
+          dolore
+          magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi <u>ut aliquip ex ea
+            commodo
+            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat</u> nulla
+          pariatur. Excepteur sint occaecat cupidatat non proident, <u>sunt in culpa qui officia</u> deserunt mollit
+          anim
+          id est
+          laborum.</p>
+      </article>
+    </section>
+
+    <section title="Lists">
+      <h2 class="highlight">Lists</h2>
+      <article>
+        <h3>Marked list</h3>
+        <ul class="red-dots">
+          <li>Lorem</li>
+          <li>Ipsum</li>
+          <li>Dolor</li>
+        </ul>
+        <h3>Ordered list</h3>
+        <ol>
+          <li>Lorem</li>
+          <li>Ipsum</li>
+          <li>Dolor</li>
+        </ol>
+      </article>
+    </section>
+
+    <section title="Images">
+      <h2 class="highlight">Random images</h2>
+      <article>
+        <a><img src="https://random.imagecdn.app/500/150"></a> 500*150
+        <a><img src="https://random.imagecdn.app/600/100"></a> 600*100
+        <a><img src="https://random.imagecdn.app/800/800" class="bordered"></a> 800*800 (bordered)
+      </article>
+    </section>
+
+    <section title="Quote and Link">
+      <h2 class="highlight">Quote and Link</h2>
+      <article>
+        <p><q>Я часто слышу от людей, что я что-то не смогу, а потом я беру и доказываю, что это я сделаю.
+            Тебе часто будут говорить, что ты чего-то не можешь, но правда в том что, не могут только они говорить, что
+            ты
+            чего-то не можешь они могут только говорить, что ты чего-то не можешь, но на самом что то что можешь на
+            самом
+            деле. Сдавайся. Я не сдамся. Если ты упал, то встань и иди дальше. Если тебе тяжело, не сдавайся. Если
+            трудно
+            дышать, просто дыши. Жизнь это кусочек пирога иии ойде пирог и попробуешь ли ты кусочек или будешь просто
+            смотреть и…</q> &copy; Серега Пират -
+          <!-- target="_blank" opens link in a new tab -->
+          <a href="https://www.youtube.com/watch?v=lmmZOx42o94" target="_blank"><b>Оригинал</b></a>
+        </p>
+      </article>
+    </section>
+
+    <section title="Superscript Subscript">
+      <h2 class="highlight">Superscript Subscript</h2>
+      <article>
+        Lorem<sup>ipsum</sup>
+        Lorem<sub>ipsum</sub>
+      </article>
+    </section>
+
+    <section title="Table">
+      <h2 class="highlight">Table</h2>
+      <table>
+        <caption>Caption</caption>
+        <thead>
+          <tr>
+            <th scope="col">
+              </td>
+            <th scope="col">First column</td>
+            <th scope="col">Second column</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">First row</td>
+            <td>1, 1</td>
+            <td>1, 2</td>
+          </tr>
+          <tr>
+            <th scope="row">Second row</td>
+            <td>2, 1</td>
+            <td>2, 2</td>
+          </tr>
+          <tr>
+            <th scope="row">Third row</td>
+            <td>3, 1</td>
+            <td>3, 2</td>
+            </th>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <footer title="Form">
+    <h2 class="highlight">Leave a review about the article</h2>
+    <form id="myForm">
+      <h4>Review tone</h4>
+      <input type="radio" name="type" value="positive" onchange="handleChange(this)">Positive
+      <input type="radio" name="type" value="negative" onchange="handleChange(this)">Negative
+
+      <form id="hidenDetails">
+        <p>hajhskfjakl</p>
+      </form>
+    </form>
+  </footer>
+
+  <script>
+    function handleChange(src) {
+      var hidenDetails = document.getElementById("hidenDetails")
+
+      if (src.value === "positive") {
+        hidenDetails.style.visibility = "visible"
+      } else if (src.value === "negative") {
+        hidenDetails.style.visibility = "hidden"
+        alert(src.value)
+      }
+    }
+  </script>
+
+</body>
+
+</html>
