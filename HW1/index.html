@@ -3,6 +3,7 @@
 
 <head>
   <link rel="stylesheet" href="styles.css">
+  <script src="script.js"></script>
   <title>Volodin HW1</title>
 </head>
 
@@ -143,29 +144,21 @@
 
   <footer title="Form">
     <h2 class="highlight">Leave a review about the article</h2>
-    <form id="myForm">
-      <h4>Review tone</h4>
-      <input type="radio" name="type" value="positive" onchange="handleChange(this)">Positive
+    <form>
+      <h4>Review tone (try choose negative)</h4>
+      <input type="radio" name="type" value="positive" checked="checked" onchange="handleChange(this)">Positive
       <input type="radio" name="type" value="negative" onchange="handleChange(this)">Negative
-
-      <form id="hidenDetails">
-        <p>hajhskfjakl</p>
-      </form>
     </form>
+    <br><br>
+    <form id="myForm">
+      <label for="email">Input email</label>
+      <input id="email" type="text"><br><br>
+      <label>Type review</label><br>
+      <textarea cols="30" rows="10" placeholder="Type here"></textarea>
+    </form>
+
+    <label id="noNeed" hidden>No need >:(</label>
   </footer>
-
-  <script>
-    function handleChange(src) {
-      var hidenDetails = document.getElementById("hidenDetails")
-
-      if (src.value === "positive") {
-        hidenDetails.style.visibility = "visible"
-      } else if (src.value === "negative") {
-        hidenDetails.style.visibility = "hidden"
-        alert(src.value)
-      }
-    }
-  </script>
 
 </body>
 
