@@ -87,10 +87,10 @@ func updateField(id int, newField string) {
   return 
 }
 
-func findGame(user *websocket.Conn) Game {
+func findGame(user *websocket.Conn) *Game {
   game_id := slices.IndexFunc(games, func(g Game) bool { return g.host.ws == user || g.guest.ws == user })
 
-  return games[game_id]
+  return &games[game_id]
 }
 
 func deleteGame(user *websocket.Conn) {
@@ -154,9 +154,9 @@ func printGames() {
       case 0:
         s = "*"
       case 1:
-        s = "O"
-      case 2:
         s = "X"
+      case 2:
+        s = "O"
       }
 
       res += s

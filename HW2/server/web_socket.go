@@ -79,7 +79,7 @@ func reader(conn *websocket.Conn) {
       updateField(n, commands[2])
 
       game := findGame(conn)
-      end, v := check_end_game(game)
+      end, v := check_end_game(*game)
 
       if end {
         if game.host.char == v {
@@ -106,8 +106,10 @@ func reader(conn *websocket.Conn) {
 }
 
 func sendUser(conn *websocket.Conn, message string, messageType int) {
-  if err := conn.WriteMessage(messageType, []byte(message)); err != nil {
-    log.Println(err)
-    return
+  if conn != nil {
+    if err := conn.WriteMessage(messageType, []byte(message)); err != nil {
+      log.Println(err)
+      return
+    }
   }
 }
