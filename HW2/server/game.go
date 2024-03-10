@@ -90,6 +90,10 @@ func updateField(id int, newField string) {
 func findGame(user *websocket.Conn) *Game {
   game_id := slices.IndexFunc(games, func(g Game) bool { return g.host.ws == user || g.guest.ws == user })
 
+  if game_id == -1 {
+    return nil
+  }
+
   return &games[game_id]
 }
 

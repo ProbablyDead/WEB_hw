@@ -58,19 +58,22 @@ func reader(conn *websocket.Conn) {
       sendUser(conn, joinGame(Player{ws: conn, name: commands[2]}, n), messageType)
 
       game := findGame(conn)
+
+      if game == nil {
+        continue
+      }
+
       sendUser(game.host.ws, "joined/" + game.guest.name, 1)
 
-      i := rand.Intn(2) 
+      i := uint8(rand.Intn(2) + 1)
+      j := i % 2 + 1 // converts 1 to 2 and vice versa
 
-      if i == 0 {
-        game.host.char = 1
-        game.guest.char = 2
-        sendUser(game.host.ws, "turn/1", messageType)
-      } else {
-        game.guest.char = 1
-        game.host.char = 2
-        sendUser(game.guest.ws, "turn/1", messageType)
-      }
+      game.host.char = i
+      game.guest.char = j
+
+      sendUser(game.host.ws, "turn/" + strconv.Itoa(int(i)), messageType)
+      sendUser(game.guest.ws, "turn/" + strconv.Itoa(int(j)), messageType)
+
     case "update":
       n, err := strconv.Atoi(commands[1])
       if err != nil {
@@ -106,10 +109,12 @@ func reader(conn *websocket.Conn) {
 }
 
 func sendUser(conn *websocket.Conn, message string, messageType int) {
-  if conn != nil {
-    if err := conn.WriteMessage(messageType, []byte(message)); err != nil {
-      log.Println(err)
-      return
-    }
+  if conn == nil {
+    return 
+  }
+
+  if err := conn.WriteMessage(messageType, []byte(message)); err != nil {
+    log.Println(err)
+    return
   }
 }

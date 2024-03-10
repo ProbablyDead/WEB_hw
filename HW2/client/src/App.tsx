@@ -3,7 +3,7 @@ import './App.css';
 
 import StartMenuPage from './components/Menu/StartMenuPage';
 import MultiplayerMenuPage from './components/Menu/MultyplayerMenuPage';
-import GamePage from './components/Game/GamePage';
+import Game from './components/Game/Game';
 import ErrorPage from './components/Error/ErrorPage';
 
 import StartMenuState from './ts/interfaces/states/StartMenuState.interface';
@@ -22,17 +22,17 @@ interface AppState {
 };
 
 interface Players {
-  player1: PlayerProps;
-  player2: PlayerProps;
+  user: PlayerProps;
+  opponent: PlayerProps;
 }
 
 function App() {
-  const errorMessage = "Got 'undefined' while unwrapping players' info";
+  const errorMessage = "Got 'null' while unwrapping players' info";
 
   const [AppState, setAppState] = useState<AppState>({page: "startMenu"});
-  const [Players, setPlayers] = useState<Players>();
+  const [Players, setPlayers] = useState<Players | null>(null);
 
-  const setPlayersCall = (player1: PlayerProps, player2: PlayerProps) => {setPlayers({player1, player2})};
+  const setPlayersCall = (players: Players | null) => {setPlayers(players)};
 
   const setGame = () => {setAppState({page: "game"})};
   const setStartMenu = () => {setAppState({page: "startMenu"})};
@@ -40,28 +40,32 @@ function App() {
 
   switch (AppState.page) {
   case "startMenu":
-   return StartMenuPage({
-     multyplayerOnClick: setMultyplayer, 
-     singleOnClick: setGame,
-     setPlayers: setPlayersCall
-     });
+    return <StartMenuPage
+      multyplayerOnClick={setMultyplayer}
+      singleOnClick={setGame}
+      setPlayers={setPlayersCall}
+    />;
   case "multyplayerMenu":
-    return MultiplayerMenuPage({
-      createOnClick: setGame, 
-      joinOnClick: setGame,
-      backOnClick: setStartMenu,
-      setPlayers: setPlayersCall
-    }
-   );
+    return <MultiplayerMenuPage
+      toGame={setGame}
+      backOnClick={setStartMenu}
+      setPlayers={setPlayersCall}
+    />;
   case "game":
-    if (Players !== undefined) {
-      return GamePage({Player1: Players.player1, Player2: Players.player2});
+    if (Players !== null) {
+      return <Game
+        returnToStartCallBack={setStartMenu}
+        players={Players}
+      />;
     } else {
       setAppState({page: "error"})
       return null;
     }
   case "error":
-    return ErrorPage({message: errorMessage, backOnClick: setStartMenu});
+    return <ErrorPage 
+      message={errorMessage}
+      backOnClick={setStartMenu}
+    />;
   }; 
 }
 

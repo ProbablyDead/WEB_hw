@@ -1,3 +1,4 @@
 export default interface GameState {
-  page: "game"
+  page: "game";
+  state: "turn" | "notTurn" | "end";
 }

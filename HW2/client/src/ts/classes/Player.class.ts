@@ -1,11 +1,15 @@
-import PlayerProps from '../interfaces/Player.interface'
+import PlayerProps from "../interfaces/Player.interface"
 
 export default class Player implements PlayerProps {
-  ws?: WebSocket;
   name: string;
+  char: number;
 
   constructor (name: string) {
     this.name = name;
-    // this.ws = ws;
-  };
-}
+    this.char = 2;
+  }
+
+  getTurn () { 
+    return true;
+  }
+};
