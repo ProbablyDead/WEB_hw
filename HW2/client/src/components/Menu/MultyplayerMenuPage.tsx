@@ -3,7 +3,7 @@ import Menu from "./Menu/Menu";
 import styles from "./Menu/Menu.module.css";
 
 import PlayerProps from "../../ts/interfaces/Player.interface";
-import MultiplayerPlayer from "../../ts/classes/MultyplayerPlayer.class";
+import MultiplayerPlayer from "../../ts/classes/Players/MultyplayerPlayer.class";
 
 interface MultiplayerMenuPageProps {
   toGame: () => void;
@@ -32,13 +32,13 @@ const MultiplayerMenuPage: React.FC<MultiplayerMenuPageProps> =
       <Menu buttons={[
         {title: "Create game", onClick: () => createPlayers(setPlayers, toGame)},
         {title: "Join game", onClick: () => createPlayers(setPlayers, toGame)},
-        {title: "Back", onClick: backOnClick}
+        {title: "Back", onClick: () => { setPlayers(null); backOnClick(); }}
         ]}
       />
-      <label>
+      <label htmlFor="name">
         Input your name:
       </label>
-      <input type='text' id='name' name='name' required minLength={1} maxLength={20} size={25}/>
+      <input autoComplete="off" type='text' id='name' name='name' required minLength={1} maxLength={20} size={25}/>
     </div>
     );
   };

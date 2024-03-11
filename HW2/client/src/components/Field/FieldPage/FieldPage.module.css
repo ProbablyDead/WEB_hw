@@ -1,0 +1,13 @@
+.field {
+  text-align: center;
+  margin: 100px;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+}
+
+.players {
+  text-align: center;
+}

@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import './App.css';
+import styles from "./App.module.css";
 
 import StartMenuPage from './components/Menu/StartMenuPage';
 import MultiplayerMenuPage from './components/Menu/MultyplayerMenuPage';
@@ -38,35 +38,47 @@ function App() {
   const setStartMenu = () => {setAppState({page: "startMenu"})};
   const setMultyplayer = () => {setAppState({page: "multyplayerMenu"})};
 
+  let currentPage;
+  
   switch (AppState.page) {
   case "startMenu":
-    return <StartMenuPage
+    currentPage = <StartMenuPage
       multyplayerOnClick={setMultyplayer}
       singleOnClick={setGame}
       setPlayers={setPlayersCall}
     />;
+    break;
   case "multyplayerMenu":
-    return <MultiplayerMenuPage
+    currentPage = <MultiplayerMenuPage
       toGame={setGame}
       backOnClick={setStartMenu}
       setPlayers={setPlayersCall}
     />;
+    break;
   case "game":
     if (Players !== null) {
-      return <Game
+      currentPage = <Game
         returnToStartCallBack={setStartMenu}
         players={Players}
       />;
     } else {
       setAppState({page: "error"})
-      return null;
+      currentPage = null;
     }
+    break;
   case "error":
-    return <ErrorPage 
+    currentPage = <ErrorPage 
       message={errorMessage}
       backOnClick={setStartMenu}
     />;
+    break;
   }; 
+
+  return (
+  <div className={styles.app}>
+    {currentPage}
+  </div>
+  );
 }
 
 export default App;

@@ -1,0 +1,14 @@
+.cell {
+  height: 50px;
+  width: 50px;
+  background-color: #ececec;
+  border-color: gray;
+  font-size: 30px;
+  color: black;
+
+  .cell:disabled {
+    all: inherit;
+    cursor: not-allowed;
+  }
+} 
+
