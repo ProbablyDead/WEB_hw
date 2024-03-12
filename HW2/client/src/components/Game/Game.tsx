@@ -26,20 +26,6 @@ const Game: React.FC<GameProps> = ({returnToStartCallBack,
   user.isEndCallback = () => {setGameState({page: "game", state: "end"})};
   opponent.isEndCallback = () => {setGameState({page: "game", state: "end"})};
 
-  let field = CurrentField, fieldS = field.getField();
-  let player = GameStateHook.state === "turn" ? user : opponent;
-
-  let handler = (at: number) => {
-    field.setField(fieldS.substring(0, at) + player.char + fieldS.substring(at+1));
-    changeGS();
-  };
-
-  console.log("game");
-
-  if (GameStateHook.state !== "end") {
-    player.makeMove(fieldS, handler);
-  }
-
   return (
     <FieldPage 
       field={CurrentField}

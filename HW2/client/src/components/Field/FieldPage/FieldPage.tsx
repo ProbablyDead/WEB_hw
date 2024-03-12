@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import PlayerProps from "../../../ts/interfaces/Player.interface";
 import GameState from "../../../ts/interfaces/states/GameState.interface";
 import FieldClassProps from "../../../ts/interfaces/Field.interface";
@@ -29,10 +29,15 @@ const FieldPage: React.FC<FieldPorps> = ({field, state, callbacks: {setTurn, lea
   let opChar = user.char === "X" ? "O" : "X";
 
   let handler = (at: number) => {
-    field.setField(fieldS.substring(0, at) + player.char + fieldS.substring(at+1));
+    field.setField(fieldS.substring(0, at) + player.char + fieldS.substring(at + 1));
     setTurn();
-    console.log("pl mv");
   };
+
+  useEffect(() => {
+    if (state.state !== "end") {
+      player.makeMove(fieldS, handler);
+    }
+  }, [state]);
 
   for (let i = 0; i < fieldS.length/3; i++) {
     let row = [];
@@ -69,7 +74,15 @@ const FieldPage: React.FC<FieldPorps> = ({field, state, callbacks: {setTurn, lea
   currentTurnString += " turn";
 
   if (state.state === "end") {
-    currentTurnString = "End";
+    currentTurnString = "";
+
+    let endS = opponent.isEnd(fieldS);
+
+    if (endS === " ") {
+        currentTurnString = "Draw";
+    }
+
+    currentTurnString = endS === user.char ? "You win!" : "You lose";
   }
 
   return (

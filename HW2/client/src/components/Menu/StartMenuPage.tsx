@@ -28,7 +28,6 @@ function createPlayers(setPlayers: (players: {user: PlayerProps, opponent: Playe
 
 const StartMenuPage: React.FC<StartMenuPageProps> = 
   ({multyplayerOnClick, singleOnClick, setPlayers}) => {
-  console.log("aboba");
   return (
       <Menu buttons={[
         {title: "Multiplayer", onClick: multyplayerOnClick},

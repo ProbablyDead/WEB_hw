@@ -3,8 +3,8 @@ export default interface PlayerProps {
   char: string;
   isEndCallback: () => void;
 
-  makeMove: (_field: string, callback: (at: number) => void) => Promise<void>;
-  isEnd: (field: string) => void;
+  makeMove: (_field: string, callback: (at: number) => void) => void;
+  isEnd: (field: string) => string;
   getTurn: () => boolean;
 }
 
