@@ -132,7 +132,7 @@ func check_end_game(game Game) (bool, uint8) {
   }
 
   if !flag {
-    return true, 3;
+    return true, 3
   }
   
   for i := 0; i < 3; i++ {

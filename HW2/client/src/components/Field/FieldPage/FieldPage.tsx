@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useCallback, useEffect} from "react";
 import PlayerProps from "../../../ts/interfaces/Player.interface";
 import GameState from "../../../ts/interfaces/states/GameState.interface";
 import FieldClassProps from "../../../ts/interfaces/Field.interface";
@@ -26,25 +26,24 @@ const FieldPage: React.FC<FieldPorps> = ({field, state, callbacks: {setTurn, lea
 
   let cells = [];
   let fieldS = field.getField();
-  let opChar = user.char === "X" ? "O" : "X";
 
-  let handler = (at: number) => {
+  let handler = useCallback((at: number) => {
     field.setField(fieldS.substring(0, at) + player.char + fieldS.substring(at + 1));
     setTurn();
-  };
+  }, [field, fieldS, player.char, setTurn]);
 
   useEffect(() => {
     if (state.state !== "end") {
       player.makeMove(fieldS, handler);
     }
-  }, [state]);
+  }, [state, handler, player, fieldS]);
 
   for (let i = 0; i < fieldS.length/3; i++) {
     let row = [];
 
     for (let j = 0; j < fieldS.length/3; j++) {
       let k = i*3 + j;
-      let condition = !turnBool || fieldS[k] === opChar; 
+      let condition = !turnBool || fieldS[k] !== " "; 
 
       row.push (
         <FieldCell
@@ -77,12 +76,13 @@ const FieldPage: React.FC<FieldPorps> = ({field, state, callbacks: {setTurn, lea
     currentTurnString = "";
 
     let endS = opponent.isEnd(fieldS);
+    console.log(endS);
 
     if (endS === " ") {
-        currentTurnString = "Draw";
+        currentTurnString = "Tie";
+    } else {
+      currentTurnString = (endS === user.char ? user.name : opponent.name) + " wins!";
     }
-
-    currentTurnString = endS === user.char ? "You win!" : "You lose";
   }
 
   return (
