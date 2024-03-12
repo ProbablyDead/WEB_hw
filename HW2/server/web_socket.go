@@ -88,9 +88,12 @@ func reader(conn *websocket.Conn) {
         if game.host.char == v {
           sendUser(game.host.ws, "win", messageType)
           sendUser(game.guest.ws, "lose", messageType)
-        } else {
+        } else if game.guest.char == v {
           sendUser(game.guest.ws, "win", messageType)
           sendUser(game.host.ws, "lose", messageType)
+        } else {
+          sendUser(game.guest.ws, "draw", messageType)
+          sendUser(game.host.ws, "draw", messageType)
         }
         deleteGame(game.host.ws)
       }

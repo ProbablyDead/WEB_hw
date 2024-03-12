@@ -124,6 +124,17 @@ func deleteGame(user *websocket.Conn) {
 func check_end_game(game Game) (bool, uint8) {
   g_field := game.field
 
+  flag := false
+  for _, v := range g_field {
+    if v != 0 {
+      flag = true
+    }
+  }
+
+  if !flag {
+    return true, 3;
+  }
+  
   for i := 0; i < 3; i++ {
     if g_field[3*i] == g_field[1 + 3*i] && g_field[1 + 3*i] == g_field[2 + 3*i] && g_field[3*i] != 0 {
       return true, g_field[3*i]
