@@ -17,7 +17,7 @@ export default class Player implements PlayerProps {
     }
   } 
 
-  isEnd(field: string): string {
+  isEnd (field: string): string {
     for (let i = 0; i < 3; i++) {
       if (field[3*i] === field[1 + 3*i] && field[1 + 3*i] === field[2 + 3*i] && field[3*i] !== " ") {
         return field[3*i];
@@ -42,7 +42,9 @@ export default class Player implements PlayerProps {
     return "-";
   }
 
+  update (_field: string) {} // stub
 
   getTurn () { return true; } // stub
 
+  deleteGame () {}; // stub
 };

@@ -30,19 +30,21 @@ export default class Bot extends Player {
 
   private getBestMove(field: string): number {
     let bestScore = -Infinity;
-    let move: number = -1;
+    let moves: number[] = [];
 
     for (let i = 0; i < 9; i++) {
       if (field[i] === " ") {
         let score = this.minimax(this.setCharAt(field, i, this.char));
         if (score > bestScore) {
-          move = i;
+          moves = [i];
           bestScore = score;
+        } else if (bestScore == score) {
+          moves.push(i);
         }
       }
     }
 
-    return move;
+    return moves[Math.floor(Math.random()*moves.length)];
   }
 
   private minimax(field: string, isMaximising: boolean = false): number {

@@ -5,3 +5,7 @@
 .error {
   border: red solid 1px;
 }
+
+.info {
+  text-align: center;
+}

@@ -11,7 +11,7 @@ interface StartMenuPageProps {
   setPlayers: (players: {user: PlayerProps, opponent: PlayerProps} | null) => void;
 }
 
-function createPlayerBot(setPlayers: (players: {user: PlayerProps, opponent: PlayerProps} | null) => void, singleOnClick: () => void) {
+function createPlayerAndBot(setPlayers: (players: {user: PlayerProps, opponent: PlayerProps} | null) => void, singleOnClick: () => void) {
   let user = new Player("You"), opponent = new Bot("Bot");
 
   if (opponent.getTurn()) {
@@ -49,7 +49,7 @@ const StartMenuPage: React.FC<StartMenuPageProps> =
   return (
       <Menu buttons={[
         {title: "Multiplayer", onClick: multyplayerOnClick},
-        {title: "Single play", onClick: () => createPlayerBot(setPlayers, singleOnClick)},
+        {title: "Single play", onClick: () => createPlayerAndBot(setPlayers, singleOnClick)},
         {title: "Bot vs Bot OMG", onClick: () => createBots(setPlayers, singleOnClick)}
       ]}/>
     );

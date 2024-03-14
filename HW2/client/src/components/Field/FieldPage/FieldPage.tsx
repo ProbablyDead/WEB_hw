@@ -28,9 +28,11 @@ const FieldPage: React.FC<FieldPorps> = ({field, state, callbacks: {setTurn, lea
   let fieldS = field.getField();
 
   let handler = useCallback((at: number) => {
-    field.setField(fieldS.substring(0, at) + player.char + fieldS.substring(at + 1));
+    let n_field = fieldS.substring(0, at) + player.char + fieldS.substring(at + 1);
+    field.setField(n_field);
+    opponent.update(n_field);
     setTurn();
-  }, [field, fieldS, player.char, setTurn]);
+  }, [field, fieldS, player.char, setTurn, opponent]);
 
   useEffect(() => {
     if (state.state !== "end") {
@@ -76,10 +78,11 @@ const FieldPage: React.FC<FieldPorps> = ({field, state, callbacks: {setTurn, lea
     currentTurnString = "";
 
     let endS = opponent.isEnd(fieldS);
-    console.log(endS);
 
     if (endS === " ") {
-        currentTurnString = "Tie";
+      currentTurnString = "Tie";
+    } else if (endS === "!") {
+      currentTurnString = "Opponent left!";
     } else {
       currentTurnString = (endS === user.char ? user.name : opponent.name) + " wins!";
     }
@@ -94,7 +97,7 @@ const FieldPage: React.FC<FieldPorps> = ({field, state, callbacks: {setTurn, lea
         {currentTurnString}
       </div>
     </div>
-    <MenuButton title="Leave game" onClick={leaveGame}/>
+    <MenuButton title="Leave game" onClick={() => {opponent.deleteGame(); leaveGame();}}/>
   </div>
   );
 };

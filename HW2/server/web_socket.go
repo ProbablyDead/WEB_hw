@@ -24,21 +24,33 @@ func upgradeToWSHandler(w http.ResponseWriter, r *http.Request) {
     log.Println(err)
   }
 
-  err = ws.WriteMessage(1, []byte("Hello there"))
-  if err != nil {
-    log.Println(err)
-  }
-
   log.Println("Client connected")
 
   reader(ws)
+}
+
+func delete(conn *websocket.Conn) {
+  game := findGame(conn)
+ 
+  if game == nil {
+    return
+  }
+ 
+  if game.host.ws != nil {
+    sendUser(game.host.ws, "deleted", 1)
+  }
+  if game.guest.ws != nil {
+    sendUser(game.guest.ws, "deleted", 1)
+  }
+ 
+  deleteGame(conn)
 }
 
 func reader(conn *websocket.Conn) {
   for {
     messageType, p, err := conn.ReadMessage()
     if err != nil {
-      deleteGame(conn)
+      delete(conn)
       log.Println(err)
       return
     }
@@ -49,30 +61,31 @@ func reader(conn *websocket.Conn) {
 
     switch commands[0] {
     case "create":
-      sendUser(conn, createGame(Player{ws: conn, name: commands[1]}), messageType)
+      sendUser(conn, "created/" + createGame(Player{ws: conn, name: commands[1]}), messageType)
+    case "delete":
+      delete(conn)
     case "join":
       n, err := strconv.Atoi(commands[1])
       if err != nil {
         log.Println(err)
       }
-      sendUser(conn, joinGame(Player{ws: conn, name: commands[2]}, n), messageType)
 
-      game := findGame(conn)
+      hostChar := uint8(rand.Intn(2) + 1)
+      guestChar := hostChar % 2 + 1 // converts 1 to 2 and vice versa
+
+      game := findById(n)
 
       if game == nil {
+        sendUser(conn, "failure", messageType)
         continue
       }
 
-      sendUser(game.host.ws, "joined/" + game.guest.name, 1)
+      sendUser(conn, joinGame(Player{ws: conn, name: commands[2]}, n) + "/" + strconv.Itoa(int(guestChar)), messageType)
 
-      i := uint8(rand.Intn(2) + 1)
-      j := i % 2 + 1 // converts 1 to 2 and vice versa
+      game.host.char = hostChar
+      game.guest.char = guestChar
 
-      game.host.char = i
-      game.guest.char = j
-
-      sendUser(game.host.ws, "turn/" + strconv.Itoa(int(i)), messageType)
-      sendUser(game.guest.ws, "turn/" + strconv.Itoa(int(j)), messageType)
+      sendUser(game.host.ws, "joined/" + game.guest.name + "/" + strconv.Itoa(int(hostChar)), 1)
 
     case "update":
       n, err := strconv.Atoi(commands[1])
@@ -81,7 +94,7 @@ func reader(conn *websocket.Conn) {
       }
       updateField(n, commands[2])
 
-      game := findGame(conn)
+      game := findById(n)
       end, v := check_end_game(*game)
 
       if end {
@@ -96,15 +109,14 @@ func reader(conn *websocket.Conn) {
           sendUser(game.host.ws, "draw", messageType)
         }
         deleteGame(game.host.ws)
+        continue
       }
 
       field := getField(game.id)
       if game.guest.ws == conn {
-        sendUser(game.host.ws, field, messageType)
-        sendUser(game.host.ws, "turn", messageType)
+        sendUser(game.host.ws, "turn/" + field, messageType)
       } else {
-        sendUser(game.guest.ws, field, messageType)
-        sendUser(game.guest.ws, "turn", messageType)
+        sendUser(game.guest.ws, "turn/" + field, messageType)
       }
 
     }

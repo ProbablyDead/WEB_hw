@@ -9,15 +9,14 @@ import (
 	"github.com/gorilla/websocket"
 )
 
-const success = "success"
 const failure = "failure"
-const max_games = 10
+const max_games = 0
 
 type Game struct {
   id int
   free bool
 
-  host Player 
+  host Player
   guest Player
 
   field []uint8
@@ -69,7 +68,7 @@ func joinGame(player Player, id int) string {
   games[game_id].guest = player
 
   printGames()
-  return success + "/" + games[game_id].host.name
+  return "joined/" + games[game_id].host.name
 }
 
 func updateField(id int, newField string) {
@@ -85,6 +84,14 @@ func updateField(id int, newField string) {
 
   printGames()
   return 
+}
+
+func findById(id int) *Game {
+  game_id := slices.IndexFunc(games, func(g Game) bool { return g.id == id})
+  if game_id == -1 {
+    return nil
+  }
+  return &games[game_id]
 }
 
 func findGame(user *websocket.Conn) *Game {
@@ -104,19 +111,10 @@ func deleteGame(user *websocket.Conn) {
     return 
   }
 
-  game := &games[game_id]
+  c_game := Game{}
+  c_game.free = true
 
-  if game.host.ws != nil {
-    game.host.ws.Close()
-    game.host.ws = nil
-  }
-
-  if game.guest.ws != nil {
-    game.guest.ws.Close()
-    game.guest.ws = nil
-  }
-
-  game.free = true
+  games[game_id] = c_game
 
   printGames()
 }
@@ -126,7 +124,7 @@ func check_end_game(game Game) (bool, uint8) {
 
   flag := false
   for _, v := range g_field {
-    if v != 0 {
+    if v == 0 {
       flag = true
     }
   }
