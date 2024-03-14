@@ -10,7 +10,7 @@ import (
 )
 
 const failure = "failure"
-const max_games = 0
+const max_games = 10
 
 type Game struct {
   id int
