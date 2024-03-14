@@ -28,12 +28,12 @@
 
 #### Мультиплейер
 
-![multypl]("./rdmSrc/multy.gif")
+![multypl](./rdmSrc/multy.gif)
 
 #### Игра с ботом
 
-![single]("./rdmSrc/single.gif")
+![single](./rdmSrc/single.gif)
 
 #### Сражение роботов
 
-![bots]("./rdmSrc/bots.gif")
+![bots](./rdmSrc/bots.gif)
