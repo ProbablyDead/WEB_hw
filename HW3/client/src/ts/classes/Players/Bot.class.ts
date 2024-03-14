@@ -38,7 +38,7 @@ export default class Bot extends Player {
         if (score > bestScore) {
           moves = [i];
           bestScore = score;
-        } else if (bestScore == score) {
+        } else if (bestScore === score) { // algorith downgrade
           moves.push(i);
         }
       }

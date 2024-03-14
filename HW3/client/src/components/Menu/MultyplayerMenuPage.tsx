@@ -114,7 +114,7 @@ const MultiplayerMenuPage: React.FC<MultiplayerMenuPageProps> =
           <label htmlFor="name">
             Input your name:
           </label>
-          <input autoComplete="off" type='text' id='name' name='name' required minLength={1} maxLength={20} size={25} defaultValue={UserName}/>
+          <input autoComplete="off" className={styles.input} type='text' id='name' name='name' required minLength={1} maxLength={20} size={25} defaultValue={UserName}/>
         </div>
         );
     case "create":

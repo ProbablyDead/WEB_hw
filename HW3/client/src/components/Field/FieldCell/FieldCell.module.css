@@ -1,9 +1,9 @@
 .cell {
-  height: 50px;
-  width: 50px;
+  height: 100px;
+  width: 100px;
   background-color: #ececec;
   border-color: gray;
-  font-size: 30px;
+  font-size: 70px;
   color: black;
 
   .cell:disabled {
